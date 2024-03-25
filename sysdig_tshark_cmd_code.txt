@@ -1,0 +1,29 @@
+*******    教学平台采集器     *******
+*******审计/网络探针命令行代码*******
+
+审计探针sysdig
+sudo /bin/bash install-sysdig.sh
+sudo mkdir /var/log/sysdig/
+# 将压缩包内的全部脚本放在任意路径下并运行以下命令：
+# 首先运行get_sysdig_cmd_110.sh，自动根据现有容器情况，生成最新采集脚本：
+/bin/bash get_sysdig_cmd_110.sh
+# 使用如下命令进行采集：
+sudo /bin/bash sysdig_cmd_teach.sh
+#在采集完成后（停止sysdig_cmd_teach.sh脚本），然后在sysdig_cmd_teach.sh当前目录执行以下命令：
+sudo /bin/bash scap2log_redirect.sh
+
+关闭：
+# 直接终止sysdig_cmd_teach.sh
+存储路径：
+# 在scap2log_redirect.sh中设置，默认为/var/log/sysdig/atk_container_teach.log，修改脚本中第2行即可。
+
+网络探针tshark
+1. 每台机器上安装：
+pip3 install psutil
+sudo apt install tshark
+# 安装时，全部选择“yes”
+2. 在跳板机器上安装 paramiko包
+pip3 install paramiko
+
+3. 通过python3 deployment.py 启动脚本即可，注意修改hosts、用户名、密码
+python3 deployment.py
